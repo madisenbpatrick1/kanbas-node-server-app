@@ -8,4 +8,9 @@ export default function WorkingWithArrays(app) {
   app.get("/lab5/todos", (req, res) => {
     res.json(todos);
   });
+  app.get("/lab5/todos/:id", (req, res) => {
+    const { id } = req.params;
+    const todo = todos.find((t) => t.id === parseInt(id));
+    res.json(todo);
+  });
 }
