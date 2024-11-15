@@ -6,6 +6,13 @@ const assignment = {
   completed: false,
   score: 0,
 };
+
+const module = {
+    id:1,
+    name: "NodeJS",
+    description: "A JavaScript runtime built on Chrome's V8 JavaScript engine",
+    course: "CS2000",
+}
 export default function WorkingWithObjects(app) {
   app.get("/lab5/assignment", (req, res) => {
     res.json(assignment);
@@ -18,4 +25,28 @@ export default function WorkingWithObjects(app) {
     assignment.title = newTitle;
     res.json(assignment);
   });
+  app.get("/lab5/assignment/score/:newScore", (req, res) => {
+    const { newScore } = req.params;
+    assignment.score = newScore;
+    res.json(assignment);
+  });
+  app.get("/lab5/assignment/completed/:newCompleted", (req, res) => {
+    const { newCompleted } = req.params;
+    assignment.completed = newCompleted;
+    res.json(assignment);
+  });
+
+  app.get("/lab5/module/", (req, res) => {
+    res.json(module);
+  });
+  app.get("/lab5/module/name/:newName", (req, res) => {
+    const { newName } = req.params;
+    module.name = newName;
+    res.json(module.name);
+  })
+  app.get("/lab5/module/name/:newDescription", (req, res) => {
+    const { newDescription } = req.params;
+    module.description = newDescription;
+    res.json(module.description);
+  })
 }
