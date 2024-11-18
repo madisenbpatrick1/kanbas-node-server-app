@@ -6,6 +6,7 @@ import PathParameters from "./Lab5/PathParameters.js";
 import cors from "cors";
 import UserRoutes from "./Kanbas/Users/routes.js";
 import session from "express-session";
+import CourseRoutes from "./Kanbas/Courses/routes.js";
 
 const app = express();
 app.use(express.json());
@@ -34,11 +35,9 @@ const sessionOptions = {
   
 
 UserRoutes(app);
-
+CourseRoutes(app);
 Lab5(app);
-
-Hello(app); // pass app reference to Hello
-
+Hello(app);
 app.listen(process.env.PORT || 4000);
 
 // start with command line nodemon index.js
