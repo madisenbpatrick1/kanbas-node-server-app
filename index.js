@@ -7,6 +7,7 @@ import cors from "cors";
 import UserRoutes from "./Kanbas/Users/routes.js";
 import session from "express-session";
 import CourseRoutes from "./Kanbas/Courses/routes.js";
+import ModuleRoutes from "./Kanbas/Modules/routes.js";
 
 const app = express();
 app.use(express.json());
@@ -38,6 +39,7 @@ UserRoutes(app);
 CourseRoutes(app);
 Lab5(app);
 Hello(app);
+ModuleRoutes(app);
 app.listen(process.env.PORT || 4000);
 
 // start with command line nodemon index.js
