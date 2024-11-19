@@ -6,4 +6,11 @@ export default function AssignmentRoutes(app) {
         assignmentsDao.deleteAssignment(assignmentId)
         res.sendStatus(204)
     });
+
+    app.put("/api/assignments/:assignmentId", (req, res) => {
+        const { assignmentId } = req.params
+        const assignmentUpdates = req.body
+        const updatedAssignment = assignmentsDao.updateAssignment(assignmentId, assignmentUpdates)
+        res.send(updatedAssignment)
+    })
 }
