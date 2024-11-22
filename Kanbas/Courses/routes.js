@@ -2,6 +2,7 @@ import * as dao from "./dao.js";
 import * as courseDao from "../Courses/dao.js";
 import * as modulesDao from "../Modules/dao.js";
 import * as assignmentsDao from "../Assignments/dao.js";
+import * as enrollmentsDao from "../Enrollments/dao.js";
 
 export default function CourseRoutes(app) {
   app.get("/api/courses", (req, res) => {
@@ -41,14 +42,33 @@ export default function CourseRoutes(app) {
     res.json(assignments);
   });
   app.post("/api/courses/:courseId/assignments", (req, res) => {
-    const {courseId} = req.params;
+    const { courseId } = req.params;
     const assignment = {
       ...req.body,
       course: courseId,
-    }
+    };
     const newAssignment = assignmentsDao.createAssignment(assignment);
-    res.send(newAssignment)
-  })
+    res.send(newAssignment);
+  });
 
-  
+  app.get("/api/courses/enrollments", (req, res) => {
+    const enrollments = enrollmentsDao.findAllEnrollments();
+    res.json(enrollments);
+  });
+
+  app.post("/api/courses/:courseId/enroll/:userId", (req, res) => {
+    console.log("Enrolling user in course:", req.params.courseId);
+    const { courseId, userId } = req.params;
+    const enrollUser = enrollmentsDao.enrollUserInCourse(userId, courseId);
+    console.log("Enrollment result:", enrollUser);
+    res.send(enrollUser);
+  });
+
+  app.post("/api/courses/:courseId/unenroll/:userId", (req, res) => {
+    console.log("unEnrolling user in course:", req.params.courseId);
+    const { courseId, userId } = req.params;
+    const unenrollUser = enrollmentsDao.unenrollUserInCourse(userId, courseId);
+    console.log("unEnrollment result:", unenrollUser);
+    res.send(unenrollUser);
+  });
 }
