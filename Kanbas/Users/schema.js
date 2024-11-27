@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema(
     dob: Date,
     role: {
       type: String,
-      enum: ["STUDENT", "FACULTY", "ADMIN", "USER"],
+      enum: ["STUDENT", "FACULTY", "ADMIN", "USER"], // only valid values for this role 
       default: "USER",
     },
     loginId: String,
