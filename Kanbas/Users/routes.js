@@ -6,6 +6,18 @@ export default function UserRoutes(app) {
   const createUser = (req, res) => {};
   const deleteUser = (req, res) => {};
   const findAllUsers = async (req, res) => {
+    const { role, name } = req.query;
+    if (role) {
+      const users = await dao.findUsersByRole(role);
+      res.json(users);
+      return;
+    }
+    if (name) {
+      const users = await dao.findUsersByPartialName(name);
+      res.json(users);
+      return;
+    }
+
     const users = await dao.findAllUsers();
     res.json(users);
   };
@@ -18,7 +30,7 @@ export default function UserRoutes(app) {
     req.session["currentUser"] = currentUser;
     res.json(currentUser);
   };
-  const signup =  async (req, res) => {
+  const signup = async (req, res) => {
     const user = await dao.findUserByUsername(req.body.username);
     if (user) {
       res.status(400).json({ message: "Username already in use" });
@@ -42,7 +54,7 @@ export default function UserRoutes(app) {
     req.session.destroy();
     res.sendStatus(200);
   };
-  const profile =  async (req, res) => {
+  const profile = async (req, res) => {
     const currentUser = req.session["currentUser"];
     if (!currentUser) {
       res.sendStatus(401);
@@ -63,15 +75,15 @@ export default function UserRoutes(app) {
     const courses = await courseDao.findCoursesForEnrolledUser(userId);
     res.json(courses);
   };
-  const createCourse =  async (req, res) => {
+  const createCourse = async (req, res) => {
     const currentUser = req.session["currentUser"];
     const newCourse = await courseDao.createCourse(req.body);
     await enrollmentsDao.enrollUserInCourse(currentUser._id, newCourse._id);
     res.json(newCourse);
   };
-  
+
   app.post("/api/users/current/courses", createCourse);
-  
+
   app.post("/api/users", createUser);
   app.get("/api/users", findAllUsers);
   app.get("/api/users/:userId", findUserById);
@@ -82,5 +94,4 @@ export default function UserRoutes(app) {
   app.post("/api/users/signout", signout);
   app.post("/api/users/profile", profile);
   app.get("/api/users/:userId/courses", findCoursesForEnrolledUser);
-
 }
