@@ -33,13 +33,13 @@ export default function CourseRoutes(app) {
     res.json(modules);
   });
 
-  app.post("/api/courses/:courseId/modules", async (req, res) => {
+  app.post("/api/courses/:courseId/modules", (req, res) => {
     const { courseId } = req.params;
     const module = {
       ...req.body,
       course: courseId,
     };
-    const newModule = await modulesDao.createModule(module);
+    const newModule = modulesDao.createModule(module);
     res.send(newModule);
   });
 
