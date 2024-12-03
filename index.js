@@ -12,11 +12,15 @@ import AssignmentRoutes from "./Kanbas/Assignments/routes.js";
 import EnrollmentsRoutes from "./Kanbas/Enrollments/routes.js";
 import mongoose from "mongoose";
 
-const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kanbas"
+const CONNECTION_STRING =
+  process.env.MONGO_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kanbas";
 mongoose.connect(CONNECTION_STRING);
 
 const app = express();
-app.use(express.json());
+
+// // CORS: app.use(cors({ ...  }));
+// Session: app.use(session(sessionOptions));
+// JSON parser: app.use(express.json());
 
 app.use(
   cors({
@@ -26,21 +30,21 @@ app.use(
 );
 
 const sessionOptions = {
-    secret: process.env.SESSION_SECRET || "kanbas",
-    resave: false,
-    saveUninitialized: false,
+  secret: process.env.SESSION_SECRET || "kanbas",
+  resave: false,
+  saveUninitialized: false,
+};
+if (process.env.NODE_ENV !== "development") {
+  sessionOptions.proxy = true;
+  sessionOptions.cookie = {
+    sameSite: "none",
+    secure: true,
+    domain: process.env.NODE_SERVER_DOMAIN,
   };
-  if (process.env.NODE_ENV !== "development") {
-    sessionOptions.proxy = true;
-    sessionOptions.cookie = {
-      sameSite: "none",
-      secure: true,
-      domain: process.env.NODE_SERVER_DOMAIN,
-    };
-  }
-  app.use(session(sessionOptions));
-  
+}
+app.use(session(sessionOptions));
 
+app.use(express.json());
 UserRoutes(app);
 CourseRoutes(app);
 Lab5(app);
