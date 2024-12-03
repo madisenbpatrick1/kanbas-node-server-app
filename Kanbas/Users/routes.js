@@ -90,27 +90,6 @@ export default function UserRoutes(app) {
     const courses = await courseDao.findCoursesForEnrolledUser(userId);
     res.json(courses);
   };
-
-  const findCoursesForUser = async (req, res) => {
-    const currentUser = req.session["currentUser"];
-    if (!currentUser) {
-      res.sendStatus(401);
-      return;
-    }
-    if (currentUser.role === "ADMIN") {
-      const courses = await courseDao.findAllCourses();
-      res.json(courses);
-      return;
-    }
-    let { uid } = req.params;
-    if (uid === "current") {
-      uid = currentUser._id;
-    }
-    const courses = await enrollmentsDao.findCoursesForUser(uid);
-    res.json(courses);
-  };
-  app.get("/api/users/:uid/courses", findCoursesForUser);
-
   const createCourse = async (req, res) => {
     const currentUser = req.session["currentUser"];
     const newCourse = await courseDao.createCourse(req.body);
