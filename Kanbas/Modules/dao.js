@@ -5,9 +5,12 @@ export function findModulesForCourse(courseId) {
 }
 
 export function createModule(module) {
-  const newModule = { ...module, _id: Date.now().toString() };
-  Database.modules = [...Database.modules, newModule];
-  return newModule;
+  // const newModule = { ...module, _id: Date.now().toString() };
+  // Database.modules = [...Database.modules, newModule];
+  // return newModule;
+  
+  delete module._id;
+  return model.create(module);
 }
 
 export function deleteModule(moduleId) {
@@ -15,9 +18,8 @@ export function deleteModule(moduleId) {
   Database.modules = modules.filter((module) => module._id !== moduleId);
 }
 export function updateModule(moduleId, moduleUpdates) {
-    const { modules } = Database;
-    const module = modules.find((module) => module._id === moduleId);
-    Object.assign(module, moduleUpdates);
-    return module;
-  }
-  
+  const { modules } = Database;
+  const module = modules.find((module) => module._id === moduleId);
+  Object.assign(module, moduleUpdates);
+  return module;
+}
