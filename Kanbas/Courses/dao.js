@@ -17,10 +17,10 @@ export function findCoursesForEnrolledUser(userId) {
 }
 
 export function createCourse(course) {
-  delete course._id;
-  return model.create(course);
+  const newCourse = { ...course, _id: Date.now().toString() };
+  Database.courses = [...Database.courses, newCourse];
+  return newCourse;
 }
-
 export function deleteCourse(courseId) {
   const { courses, enrollments } = Database;
   Database.courses = courses.filter((course) => course._id !== courseId);
