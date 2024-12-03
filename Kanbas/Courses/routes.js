@@ -18,14 +18,14 @@ export default function CourseRoutes(app) {
   app.delete("/api/courses/:courseId", async (req, res) => {
     const { courseId } = req.params;
     const status = await dao.deleteCourse(courseId);
-    res.send(status);
+    res.sendStatus(status);
   });
-
-  app.put("/api/courses/:courseId", async (req, res) => {
+  
+  app.put("/api/courses/:courseId", (req, res) => {
     const { courseId } = req.params;
     const courseUpdates = req.body;
-    const status = await dao.updateCourse(courseId, courseUpdates);
-    res.send(status);
+    dao.updateCourse(courseId, courseUpdates);
+    res.sendStatus(204);
   });
   app.get("/api/courses/:courseId/modules", (req, res) => {
     const { courseId } = req.params;
