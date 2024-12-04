@@ -56,11 +56,6 @@ export default function CourseRoutes(app) {
     res.send(newAssignment);
   });
 
-  // app.get("/api/courses/enrollments", (req, res) => {
-  //   const enrollments = enrollmentsDao.findAllEnrollments();
-  //   res.json(enrollments);
-  // });
-
   app.post("/api/courses/:courseId/enroll/:userId", (req, res) => {
     console.log("Enrolling user in course:", req.params.courseId);
     const { courseId, userId } = req.params;
