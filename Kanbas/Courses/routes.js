@@ -51,26 +51,27 @@ export default function CourseRoutes(app) {
     res.send(newAssignment);
   });
 
-  app.get("/api/courses/enrollments", (req, res) => {
-    const enrollments = enrollmentsDao.findAllEnrollments();
-    res.json(enrollments);
-  });
+  // MOVE TO ACCOUNT 
+  // app.get("/api/courses/enrollments", (req, res) => {
+  //   const enrollments = enrollmentsDao.findAllEnrollments();
+  //   res.json(enrollments);
+  // });
 
-  app.post("/api/courses/:courseId/enroll/:userId", (req, res) => {
-    console.log("Enrolling user in course:", req.params.courseId);
-    const { courseId, userId } = req.params;
-    const enrollUser = enrollmentsDao.enrollUserInCourse(userId, courseId);
-    console.log("Enrollment result:", enrollUser);
-    res.send(enrollUser);
-  });
+  // app.post("/api/courses/:courseId/enroll/:userId", (req, res) => {
+  //   console.log("Enrolling user in course:", req.params.courseId);
+  //   const { courseId, userId } = req.params;
+  //   const enrollUser = enrollmentsDao.enrollUserInCourse(userId, courseId);
+  //   console.log("Enrollment result:", enrollUser);
+  //   res.send(enrollUser);
+  // });
 
-  app.post("/api/courses/:courseId/unenroll/:userId", (req, res) => {
-    console.log("unEnrolling user in course:", req.params.courseId);
-    const { courseId, userId } = req.params;
-    const unenrollUser = enrollmentsDao.unenrollUserInCourse(userId, courseId);
-    console.log("unEnrollment result:", unenrollUser);
-    res.send(unenrollUser);
-  });
+  // app.post("/api/courses/:courseId/unenroll/:userId", (req, res) => {
+  //   console.log("unEnrolling user in course:", req.params.courseId);
+  //   const { courseId, userId } = req.params;
+  //   const unenrollUser = enrollmentsDao.unenrollUserInCourse(userId, courseId);
+  //   console.log("unEnrollment result:", unenrollUser);
+  //   res.send(unenrollUser);
+  // });
   app.post("/api/courses", async (req, res) => {
     const course = await dao.createCourse(req.body);
     res.json(course);
