@@ -1,15 +1,24 @@
 import mongoose from "mongoose";
 
+// const userQuizAnswerSchema = new mongoose.Schema(
+//   {
+//     userId: {type: mongoose.Schema.Types.ObjectId, ref: "UserModel"},
+//     selectedChoice: [mongoose.Schema.Types.Mixed],
+//   }
+// )
+
 const QuestionSchema = new mongoose.Schema(
   {
     type: { type: String, enum: ["Multiple Choice", "Fill in the Blank", "True/False"] },
     title: String,
     questionText: String,
     points: Number,
-    correctAnswers: [mongoose.Schema.Types.Mixed], // Can be String or Boolean
-    choices: [String], // Optional, applies to Multiple Choice questions
+    correctAnswers: [mongoose.Schema.Types.Mixed], 
+    choices: [String],
   },
 ); 
+
+
 
 const QuizSchema = new mongoose.Schema(
   {
@@ -39,5 +48,8 @@ const QuizSchema = new mongoose.Schema(
   },
   { collection: "quizzes" }
 );
+
+
+
 
 export default QuizSchema;
