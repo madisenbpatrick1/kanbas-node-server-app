@@ -74,4 +74,14 @@ export default function CourseRoutes(app) {
     res.json(quizzes);
   });
 
+  app.post("/api/courses/:courseId/quizzes", async (req, res) => {
+    const { courseId } = req.params;
+    const quiz = {
+      course: courseId,
+     ...req.body,
+    };
+    const newQuiz = await quizzesDao.createQuiz(quiz);
+    res.send(newQuiz);
+  })
+
 }

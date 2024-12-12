@@ -123,11 +123,10 @@ export default function UserRoutes(app) {
   };
 
   const findQuizAttemptForUsers = async (req, res) => {
-    const { userId } = req.params;
-    const { quizId } = req.query;
+    const { userId, quizId } = req.params;
     const quizAttempt = await quizAttemptsDao.findAttemptsByUser(userId, quizId);
     res.json(quizAttempt);
-  }     
+  }
 
   app.get("/api/users/:userId/quizzes/:quizId", findQuizAttemptForUsers);
 
